@@ -1,0 +1,28 @@
+---
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  - REGISTRY_URI=''
+
+stages:
+  - name: lint
+  - name: test
+  - name: build
+
+jobs:
+  include:
+    - stage: lint
+      script:
+        - echo 'lint';
+    - stage: test
+      script: echo 'lint';
+    - stage: build
+      script:
+        - docker build -t czerasz-flaconi/node-test:latest -f ./Dockerfile .
+        - docker tag czerasz-flaconi/node-test:latest czerasz-flaconi/node-test:${TRAVIS_COMMIT}
+        # - docker push czerasz-flaconi/node-test:latest
+        # - docker push czerasz-flaconi/node-test:${TRAVIS_COMMIT}
